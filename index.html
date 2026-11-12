@@ -1,783 +1,858 @@
 <!DOCTYPE html>
 <html lang="hy">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BeautyMed Clinic - Բուժական և Գեdelays Կլինdelays</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Armenian:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary: #8B5CF6;
-            --primary-dark: #7C3AED;
-            --secondary: #EC4899;
-            --accent: #F59E0B;
-            --dark: #1F2937;
-            --light: #F9FAFB;
-            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-        }
-
-        body {
-            font-family: 'Noto Sans Armenian', sans-serif;
-            line-height: 1.6;
-            color: var(--dark);
-            overflow-x: hidden;
-        }
-
-        /* Navigation */
-        .navbar {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
-            z-index: 1000;
-            transition: all 0.3s ease;
-        }
-
-        .navbar.scrolled {
-            background: rgba(255, 255, 255, 0.98);
-            box-shadow: 0 4px 30px rgba(0,0,0,0.15);
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 2rem;
-        }
-
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--dark);
-            font-weight: 500;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--gradient);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        .mobile-menu-btn {
-            display: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--dark);
-        }
-
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            background: var(--gradient);
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
-            background-size: 50px 50px;
-            animation: moveBackground 20s linear infinite;
-        }
-
-        @keyframes moveBackground {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(50px, 50px); }
-        }
-
-        .hero-content {
-            text-align: center;
-            color: white;
-            z-index: 1;
-            padding: 2rem;
-            animation: fadeInUp 1s ease;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-        }
-
-        .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            opacity: 0.95;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 1rem 2.5rem;
-            background: white;
-            color: var(--primary);
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-        }
-
-        .btn-primary {
-            background: var(--gradient);
-            color: white;
-        }
-
-        /* Floating Elements */
-        .floating-shapes {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            overflow: hidden;
-        }
-
-        .shape {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            animation: float 6s ease-in-out infinite;
-        }
-
-        .shape:nth-child(1) {
-            width: 80px;
-            height: 80px;
-            top: 20%;
-            left: 10%;
-            animation-delay: 0s;
-        }
-
-        .shape:nth-child(2) {
-            width: 120px;
-            height: 120px;
-            top: 60%;
-            right: 10%;
-            animation-delay: 2s;
-        }
-
-        .shape:nth-child(3) {
-            width: 60px;
-            height: 60px;
-            bottom: 20%;
-            left: 30%;
-            animation-delay: 4s;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(180deg); }
-        }
-
-        /* Section Styles */
-        section {
-            padding: 5rem 2rem;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: var(--dark);
-        }
-
-        .section-subtitle {
-            text-align: center;
-            color: #6B7280;
-            margin-bottom: 3rem;
-            font-size: 1.1rem;
-        }
-
-        /* Services Section */
-        .services {
-            background: var(--light);
-        }
-
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .service-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .service-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
-        }
-
-        .service-icon {
-            width: 80px;
-            height: 80px;
-            background: var(--gradient);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1.5rem;
-            font-size: 2rem;
-            color: white;
-        }
-
-        .service-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: var(--dark);
-        }
-
-        .service-card p {
-            color: #6B7280;
-            line-height: 1.8;
-        }
-
-        /* Before & After Gallery */
-        .gallery {
-            background: white;
-        }
-
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .gallery-item {
-            position: relative;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            cursor: pointer;
-        }
-
-        .gallery-item img {
-            width: 100%;
-            height: 400px;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-
-        .gallery-item:hover img {
-            transform: scale(1.1);
-        }
-
-        .gallery-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
-            color: white;
-            padding: 2rem;
-            transform: translateY(100%);
-            transition: transform 0.3s ease;
-        }
-
-        .gallery-item:hover .gallery-overlay {
-            transform: translateY(0);
-        }
-
-        /* About Section */
-        .about {
-            background: var(--light);
-        }
-
-        .about-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: center;
-        }
-
-        .about-image {
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
-        }
-
-        .about-image img {
-            width: 100%;
-            height: 500px;
-            object-fit: cover;
-        }
-
-        .about-text h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
-            color: var(--dark);
-        }
-
-        .about-text p {
-            color: #6B7280;
-            margin-bottom: 1.5rem;
-            line-height: 1.8;
-        }
-
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .stat-label {
-            color: #6B7280;
-            margin-top: 0.5rem;
-        }
-
-        /* Appointment Form */
-        .appointment {
-            background: var(--gradient);
-            color: white;
-        }
-
-        .appointment .section-title,
-        .appointment .section-subtitle {
-            color: white;
-        }
-
-        .form-container {
-            max-width: 600px;
-            margin: 0 auto;
-            background: white;
-            padding: 3rem;
-            border-radius: 20px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: var(--dark);
-            font-weight: 500;
-        }
-
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 1rem;
-            border: 2px solid #E5E7EB;
-            border-radius: 10px;
-            font-family: inherit;
-            transition: all 0.3s ease;
-        }
-
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
-        }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 100px;
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 1rem;
-            background: var(--gradient);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.3);
-        }
-
-        /* Contact Section */
-        .contact {
-            background: white;
-        }
-
-        .contact-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
-        .contact-item {
-            text-align: center;
-            padding: 2rem;
-            background: var(--light);
-            border-radius: 20px;
-            transition: all 0.3s ease;
-        }
-
-        .contact-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-
-        .contact-icon {
-            width: 70px;
-            height: 70px;
-            background: var(--gradient);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1rem;
-            font-size: 1.5rem;
-            color: white;
-        }
-
-        .contact-item h3 {
-            margin-bottom: 0.5rem;
-            color: var(--dark);
-        }
-
-        .contact-item p {
-            color: #6B7280;
-        }
-
-        /* Footer */
-        footer {
-            background: var(--dark);
-            color: white;
-            padding: 3rem 2rem 1rem;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .footer-section h3 {
-            margin-bottom: 1rem;
-            color: var(--primary);
-        }
-
-        .footer-section ul {
-            list-style: none;
-        }
-
-        .footer-section ul li {
-            margin-bottom: 0.5rem;
-        }
-
-        .footer-section a {
-            color: #9CA3AF;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .footer-section a:hover {
-            color: white;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .social-links a {
-            width: 40px;
-            height: 40px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-        }
-
-        .social-links a:hover {
-            background: var(--gradient);
-            transform: translateY(-3px);
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            color: #9CA3AF;
-        }
-
-        /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.8);
-            z-index: 2000;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: white;
-            padding: 2rem;
-            border-radius: 20px;
-            max-width: 500px;
-            width: 90%;
-            position: relative;
-            animation: modalSlideIn 0.3s ease;
-        }
-
-        @keyframes modalSlideIn {
-            from {
-                transform: translateY(-50px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: #6B7280;
-        }
-
-        /* Success Message */
-        .success-message {
-            display: none;
-            background: #10B981;
-            color: white;
-            padding: 1rem;
-            border-radius: 10px;
-            margin-top: 1rem;
-            text-align: center;
-        }
-
-        .success-message.show {
-            display: block;
-            animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .nav-links {
-                position: fixed;
-                top: 70px;
-                left: -100%;
-                width: 100%;
-                height: calc(100vh - 70px);
-                background: white;
-                flex-direction: column;
-                padding: 2rem;
-                transition: left 0.3s ease;
-                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            }
-
-            .nav-links.active {
-                left: 0;
-            }
-
-            .mobile-menu-btn {
-                display: block;
-            }
-
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .hero p {
-                font-size: 1rem;
-            }
-
-            .about-content {
-                grid-template-columns: 1fr;
-            }
-
-            .stats {
-                grid-template-columns: 1fr;
-            }
-
-            .section-title {
-                font-size: 2rem;
-            }
-        }
-
-        /* Scroll Animation */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.6s ease;
-        }
-
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BeautyMed Clinic | Բdelays և Գdelays Կdelays</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Armenian:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root{
+  --sage:#A8B5A0;
+  --sage-dark:#7A8C6F;
+  --sage-light:#D4DDD0;
+  --beige:#E8DCC4;
+  --beige-light:#F5EFE0;
+  --beige-dark:#C9B896;
+  --grey:#6B6B6B;
+  --grey-light:#9A9A9A;
+  --grey-dark:#3D3D3D;
+  --white:#FEFCF7;
+  --shadow:0 10px 40px rgba(122,140,111,0.15);
+  --shadow-hover:0 20px 60px rgba(122,140,111,0.25);
+  --transition:all 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Noto Sans Armenian',sans-serif;background:var(--white);color:var(--grey-dark);line-height:1.7;overflow-x:hidden}
+h1,h2,h3,h4{font-family:'Playfair Display',serif;font-weight:600}
+
+/* ===== NAVBAR ===== */
+.navbar{position:fixed;top:0;width:100%;background:rgba(254,252,247,0.95);backdrop-filter:blur(20px);z-index:1000;box-shadow:0 2px 20px rgba(0,0,0,0.05);transition:var(--transition)}
+.nav-container{max-width:1300px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;padding:1rem 2rem}
+.logo{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:var(--sage-dark);display:flex;align-items:center;gap:0.5rem}
+.logo i{color:var(--sage)}
+.nav-links{display:flex;list-style:none;gap:2rem;align-items:center}
+.nav-links a{text-decoration:none;color:var(--grey-dark);font-weight:500;transition:var(--transition);position:relative}
+.nav-links a:hover{color:var(--sage-dark)}
+.nav-links a::after{content:'';position:absolute;bottom:-5px;left:0;width:0;height:2px;background:var(--sage-dark);transition:var(--transition)}
+.nav-links a:hover::after{width:100%}
+.lang-switcher{display:flex;gap:0.5rem;background:var(--beige-light);padding:0.3rem;border-radius:30px}
+.lang-btn{padding:0.4rem 0.8rem;border:none;background:transparent;border-radius:20px;cursor:pointer;font-weight:600;color:var(--grey);transition:var(--transition);font-size:0.85rem}
+.lang-btn.active{background:var(--sage);color:white}
+.mobile-menu-btn{display:none;font-size:1.5rem;cursor:pointer;color:var(--sage-dark);background:none;border:none}
+
+/* ===== HERO ===== */
+.hero{min-height:100vh;display:flex;align-items:center;background:linear-gradient(135deg,var(--beige-light) 0%,var(--sage-light) 100%);position:relative;overflow:hidden;padding:6rem 2rem 2rem}
+.hero::before{content:'';position:absolute;top:-50%;right:-20%;width:70%;height:200%;background:radial-gradient(circle,var(--sage) 0%,transparent 70%);opacity:0.15;animation:pulse 8s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+.hero-container{max-width:1300px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;position:relative;z-index:1}
+.hero-text h1{font-size:3.5rem;line-height:1.2;margin-bottom:1.5rem;color:var(--grey-dark);animation:fadeInUp 1s ease}
+.hero-text h1 span{color:var(--sage-dark);font-style:italic}
+.hero-text p{font-size:1.2rem;color:var(--grey);margin-bottom:2rem;animation:fadeInUp 1s ease 0.2s both}
+.hero-buttons{display:flex;gap:1rem;flex-wrap:wrap;animation:fadeInUp 1s ease 0.4s both}
+.btn{padding:1rem 2.5rem;border-radius:50px;font-weight:600;text-decoration:none;transition:var(--transition);cursor:pointer;border:none;font-size:1rem;display:inline-flex;align-items:center;gap:0.5rem;font-family:inherit}
+.btn-primary{background:var(--sage-dark);color:white;box-shadow:var(--shadow)}
+.btn-primary:hover{background:var(--grey-dark);transform:translateY(-3px);box-shadow:var(--shadow-hover)}
+.btn-secondary{background:transparent;color:var(--sage-dark);border:2px solid var(--sage-dark)}
+.btn-secondary:hover{background:var(--sage-dark);color:white}
+.hero-visual{position:relative;animation:fadeInRight 1s ease 0.3s both}
+.hero-card{background:white;border-radius:30px;padding:2.5rem;box-shadow:var(--shadow);position:relative}
+.hero-card::before{content:'🌿';position:absolute;top:-20px;right:-20px;font-size:4rem;opacity:0.3}
+.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:2rem}
+.stat{text-align:center;padding:1.5rem 1rem;background:var(--beige-light);border-radius:20px}
+.stat-number{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:700;color:var(--sage-dark);display:block}
+.stat-label{font-size:0.85rem;color:var(--grey);margin-top:0.3rem}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeInRight{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}
+
+/* ===== SECTIONS ===== */
+section{padding:5rem 2rem}
+.container{max-width:1300px;margin:0 auto}
+.section-header{text-align:center;margin-bottom:4rem}
+.section-tag{display:inline-block;padding:0.5rem 1.5rem;background:var(--sage-light);color:var(--sage-dark);border-radius:30px;font-size:0.85rem;font-weight:600;margin-bottom:1rem;letter-spacing:1px;text-transform:uppercase}
+.section-title{font-size:2.8rem;margin-bottom:1rem;color:var(--grey-dark)}
+.section-subtitle{color:var(--grey);font-size:1.1rem;max-width:600px;margin:0 auto}
+
+/* ===== SERVICES ===== */
+.services{background:var(--white)}
+.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem}
+.service-card{background:white;border-radius:25px;padding:2.5rem;box-shadow:var(--shadow);transition:var(--transition);cursor:pointer;border:2px solid transparent;position:relative;overflow:hidden}
+.service-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:4px;background:linear-gradient(90deg,var(--sage),var(--beige-dark));transform:scaleX(0);transform-origin:left;transition:var(--transition)}
+.service-card:hover::before{transform:scaleX(1)}
+.service-card:hover{transform:translateY(-10px);box-shadow:var(--shadow-hover);border-color:var(--sage-light)}
+.service-icon{width:70px;height:70px;background:linear-gradient(135deg,var(--sage-light),var(--beige));border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:1.8rem;color:var(--sage-dark);margin-bottom:1.5rem;transition:var(--transition)}
+.service-card:hover .service-icon{transform:rotate(-5deg) scale(1.1)}
+.service-card h3{font-size:1.4rem;margin-bottom:0.8rem;color:var(--grey-dark)}
+.service-card p{color:var(--grey);margin-bottom:1.5rem;font-size:0.95rem}
+.service-price{display:flex;justify-content:space-between;align-items:center;padding-top:1rem;border-top:1px solid var(--beige-light)}
+.price{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--sage-dark)}
+.book-btn{background:var(--sage);color:white;padding:0.5rem 1.2rem;border-radius:20px;border:none;cursor:pointer;font-weight:600;transition:var(--transition);font-size:0.85rem}
+.book-btn:hover{background:var(--sage-dark)}
+
+/* ===== GALLERY ===== */
+.gallery{background:var(--beige-light)}
+.gallery-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem}
+.gallery-item{position:relative;border-radius:20px;overflow:hidden;aspect-ratio:1;cursor:pointer;box-shadow:var(--shadow)}
+.gallery-item img{width:100%;height:100%;object-fit:cover;transition:var(--transition)}
+.gallery-item:hover img{transform:scale(1.1)}
+.gallery-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(61,61,61,0.9),transparent);display:flex;align-items:flex-end;padding:2rem;color:white;opacity:0;transition:var(--transition)}
+.gallery-item:hover .gallery-overlay{opacity:1}
+.gallery-overlay h4{font-size:1.3rem;margin-bottom:0.3rem}
+.gallery-overlay p{font-size:0.9rem;opacity:0.9}
+
+/* ===== ABOUT ===== */
+.about{background:var(--white)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.about-image{position:relative;border-radius:30px;overflow:hidden;box-shadow:var(--shadow)}
+.about-image img{width:100%;height:500px;object-fit:cover;display:block}
+.about-badge{position:absolute;bottom:20px;right:20px;background:white;padding:1.5rem 2rem;border-radius:20px;box-shadow:var(--shadow);text-align:center}
+.about-badge .number{font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:700;color:var(--sage-dark);display:block}
+.about-badge .label{font-size:0.85rem;color:var(--grey)}
+.about-text h2{font-size:2.5rem;margin-bottom:1.5rem;color:var(--grey-dark)}
+.about-text p{color:var(--grey);margin-bottom:1.5rem}
+.features{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:2rem}
+.feature{display:flex;align-items:center;gap:0.8rem;padding:1rem;background:var(--beige-light);border-radius:15px}
+.feature i{color:var(--sage-dark);font-size:1.3rem}
+.feature span{font-weight:500;color:var(--grey-dark);font-size:0.95rem}
+
+/* ===== APPOINTMENT ===== */
+.appointment{background:linear-gradient(135deg,var(--sage-light) 0%,var(--beige-light) 100%)}
+.booking-container{max-width:900px;margin:0 auto;background:white;border-radius:30px;padding:3rem;box-shadow:var(--shadow)}
+.booking-steps{display:flex;justify-content:space-between;margin-bottom:3rem;position:relative}
+.booking-steps::before{content:'';position:absolute;top:20px;left:10%;right:10%;height:2px;background:var(--beige);z-index:0}
+.step{display:flex;flex-direction:column;align-items:center;gap:0.5rem;position:relative;z-index:1}
+.step-circle{width:40px;height:40px;border-radius:50%;background:var(--beige);color:var(--grey);display:flex;align-items:center;justify-content:center;font-weight:700;transition:var(--transition)}
+.step.active .step-circle{background:var(--sage-dark);color:white;transform:scale(1.1)}
+.step-label{font-size:0.85rem;color:var(--grey);font-weight:500}
+.step.active .step-label{color:var(--sage-dark);font-weight:700}
+.booking-step{display:none;animation:fadeIn 0.5s ease}
+.booking-step.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.step-title{font-size:1.8rem;margin-bottom:0.5rem;color:var(--grey-dark)}
+.step-description{color:var(--grey);margin-bottom:2rem}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+.form-group{margin-bottom:1.2rem}
+.form-group label{display:block;margin-bottom:0.5rem;color:var(--grey-dark);font-weight:500;font-size:0.95rem}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:0.9rem 1.2rem;border:2px solid var(--beige);border-radius:15px;font-family:inherit;font-size:1rem;background:var(--beige-light);transition:var(--transition);color:var(--grey-dark)}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:var(--sage);background:white;box-shadow:0 0 0 4px rgba(168,181,160,0.15)}
+.time-slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:0.8rem;margin-top:1rem}
+.time-slot{padding:0.8rem;background:var(--beige-light);border:2px solid transparent;border-radius:12px;text-align:center;cursor:pointer;transition:var(--transition);font-weight:500}
+.time-slot:hover{border-color:var(--sage);background:white}
+.time-slot.selected{background:var(--sage);color:white;border-color:var(--sage-dark)}
+.time-slot.unavailable{opacity:0.4;cursor:not-allowed;text-decoration:line-through}
+.summary-card{background:var(--beige-light);border-radius:20px;padding:2rem;margin-bottom:2rem}
+.summary-row{display:flex;justify-content:space-between;padding:0.8rem 0;border-bottom:1px solid var(--beige)}
+.summary-row:last-child{border-bottom:none;font-weight:700;font-size:1.2rem;color:var(--sage-dark);padding-top:1rem;margin-top:0.5rem;border-top:2px solid var(--sage)}
+.summary-row .label{color:var(--grey)}
+.summary-row .value{color:var(--grey-dark);font-weight:600;text-align:right}
+.booking-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:2rem}
+.success-screen{text-align:center;padding:2rem}
+.success-icon{width:100px;height:100px;background:var(--sage);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 2rem;font-size:3rem;color:white;animation:scaleIn 0.6s ease}
+@keyframes scaleIn{from{transform:scale(0)}to{transform:scale(1)}}
+.success-screen h3{font-size:2rem;margin-bottom:1rem;color:var(--grey-dark)}
+.success-screen p{color:var(--grey);margin-bottom:2rem}
+
+/* ===== CONTACT ===== */
+.contact{background:var(--white)}
+.contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2rem}
+.contact-card{text-align:center;padding:2.5rem 2rem;background:var(--beige-light);border-radius:25px;transition:var(--transition)}
+.contact-card:hover{transform:translateY(-5px);box-shadow:var(--shadow)}
+.contact-icon{width:70px;height:70px;background:var(--sage);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;font-size:1.5rem;color:white}
+.contact-card h3{margin-bottom:0.5rem;color:var(--grey-dark)}
+.contact-card p{color:var(--grey)}
+.contact-card a{color:var(--sage-dark);text-decoration:none;font-weight:600}
+
+/* ===== FOOTER ===== */
+footer{background:var(--grey-dark);color:white;padding:4rem 2rem 2rem}
+.footer-container{max-width:1300px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem}
+.footer-section h4{margin-bottom:1.5rem;color:var(--sage-light);font-size:1.1rem}
+.footer-section p,.footer-section a{color:rgba(255,255,255,0.7);text-decoration:none;display:block;margin-bottom:0.7rem;transition:var(--transition);font-size:0.95rem}
+.footer-section a:hover{color:var(--sage-light);padding-left:5px}
+.social-links{display:flex;gap:1rem;margin-top:1.5rem}
+.social-links a{width:45px;height:45px;background:rgba(255,255,255,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0;transition:var(--transition)}
+.social-links a:hover{background:var(--sage);padding-left:0;transform:translateY(-3px)}
+.footer-bottom{text-align:center;padding-top:2rem;border-top:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.5);font-size:0.9rem}
+
+/* ===== MOBILE ===== */
+@media(max-width:968px){
+  .hero-container,.about-grid{grid-template-columns:1fr;gap:2rem}
+  .hero-text h1{font-size:2.5rem}
+  .footer-container{grid-template-columns:1fr 1fr}
+  .form-row{grid-template-columns:1fr}
+  .features{grid-template-columns:1fr}
+  .nav-links{position:fixed;top:70px;left:-100%;width:100%;height:calc(100vh - 70px);background:var(--white);flex-direction:column;padding:2rem;transition:var(--transition);box-shadow:0 10px 30px rgba(0,0,0,0.1)}
+  .nav-links.active{left:0}
+  .mobile-menu-btn{display:block}
+  .section-title{font-size:2rem}
+  .booking-container{padding:2rem 1.5rem}
+  .booking-steps{gap:0.5rem}
+  .step-label{font-size:0.7rem}
+}
+@media(max-width:480px){
+  .hero-text h1{font-size:2rem}
+  .footer-container{grid-template-columns:1fr}
+  .hero-stats{grid-template-columns:1fr}
+  .booking-steps{flex-wrap:wrap;gap:1rem}
+  .time-slots{grid-template-columns:repeat(3,1fr)}
+}
+
+/* Scroll animations */
+.fade-in{opacity:0;transform:translateY(30px);transition:all 0.8s ease}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+</style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="logo">✨ BeautyMed</div>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#home">Գլխdelays</a></li>
-                <li><a href="#services">Ծdelays</a></li>
-                <li><a href="#gallery">Պdelays</a></li>
-                <li><a href="#about">Մdelays Մdelays</a></li>
-                <li><a href="#appointment">Գdelays</a></li>
-                <li><a href="#contact">Կdelays</a></li>
-            </ul>
-            <div class="mobile-menu-btn" id="mobileMenuBtn">
-                <i class="fas fa-bars"></i>
-            </div>
-        </div>
-    </nav>
 
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="floating-shapes">
-            <div class="shape"></div>
-            <div class="shape"></div>
-            <div class="shape"></div>
-        </div>
-        <div class="hero-content">
-            <h1>Բացdelays Ձdelays Գdelays</h1>
-            <p>Մdelays delays delays delays delays delays delays delays delays delays</p>
-            <a href="#appointment" class="btn">Գdelays Հdelays</a>
-        </div>
-    </section>
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-container">
+    <div class="logo"><i class="fas fa-leaf"></i> BeautyMed</div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#home" data-i18n="nav_home">Գdelays</a></li>
+      <li><a href="#services" data-i18n="nav_services">Ծdelays</a></li>
+      <li><a href="#gallery" data-i18n="nav_gallery">Պdelays</a></li>
+      <li><a href="#about" data-i18n="nav_about">Մdelays Մdelays</a></li>
+      <li><a href="#appointment" data-i18n="nav_booking"> Delays Delays</a></li>
+      <li><a href="#contact" data-i18n="nav_contact">Կdelays</a></li>
+    </ul>
+    <div style="display:flex;gap:1rem;align-items:center">
+      <div class="lang-switcher">
+        <button class="lang-btn active" data-lang="hy">HY</button>
+        <button class="lang-btn" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="ru">RU</button>
+      </div>
+      <button class="mobile-menu-btn" id="mobileMenuBtn"><i class="fas fa-bars"></i></button>
+    </div>
+  </div>
+</nav>
 
-    <!-- Services Section -->
-    <section class="services" id="services">
-        <div class="container">
-            <h2 class="section-title fade-in">Մdelays Ծdelays</h2>
-            <p class="section-subtitle fade-in">Մdelays delays delays delays delays delays delays delays</p>
-            <div class="services-grid">
-                <div class="service-card fade-in">
-                    <div class="service-icon">
-                        <i class="fas fa-spa"></i>
-                    </div>
-                    <h3>Գdelays Բdelays</h3>
-                    <p>Մdelays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays......</p>
-                </div>
-            </div>
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-container">
+    <div class="hero-text">
+      <h1 data-i18n="hero_title">Ձdelays <span data-i18n="hero_title_accent">Գdelays</span> Delays</h1>
+      <p data-i18n="hero_subtitle">Delays delays delays delays delays delays delays delays delays delays delays delays</p>
+      <div class="hero-buttons">
+        <a href="#appointment" class="btn btn-primary" data-i18n="hero_btn1"><i class="fas fa-calendar-check"></i> Delays Delays</a>
+        <a href="#services" class="btn btn-secondary" data-i18n="hero_btn2">Delays Delays</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-card">
+        <h3 style="font-size:1.5rem;margin-bottom:1rem;color:var(--grey-dark)" data-i18n="hero_card_title">Delays Delays</h3>
+        <p style="color:var(--grey);margin-bottom:1.5rem" data-i18n="hero_card_text">Delays delays delays delays delays delays delays delays delays delays delays delays</p>
+        <div class="hero-stats">
+          <div class="stat"><span class="stat-number">10+</span><span class="stat-label" data-i18n="stat_years">Delays</span></div>
+          <div class="stat"><span class="stat-number">5000+</span><span class="stat-label" data-i18n="stat_clients">Delays</span></div>
+          <div class="stat"><span class="stat-number">50+</span><span class="stat-label" data-i18n="stat_services">Delays</span></div>
         </div>
-    </section>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- Gallery Section -->
-    <section class="gallery" id="gallery">
-        <div class="container">
-            <h2 class="section-title fade-in">Նdelays Մdelays Հdelays</h2>
-            <p class="section-subtitle fade-in">Մdelays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays......</p>
-            <div class="gallery-grid">
-                <div class="gallery-item fade-in">
-                    <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=500" alt="Before & After 1">
-                    <div class="gallery-overlay">
-                        <h3>Դdelays Բdelays</h3>
-                        <p>Delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays......
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="container">
+    <div class="section-header fade-in">
+      <span class="section-tag" data-i18n="services_tag">Delays Delays</span>
+      <h2 class="section-title" data-i18n="services_title">Delays Delays Delays</h2>
+      <p class="section-subtitle" data-i18n="services_subtitle">Delays delays delays delays delays delays delays delays delays delays delays</p>
+    </div>
+    <div class="services-grid" id="servicesGrid"></div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery" id="gallery">
+  <div class="container">
+    <div class="section-header fade-in">
+      <span class="section-tag" data-i18n="gallery_tag">Delays Delays</span>
+      <h2 class="section-title" data-i18n="gallery_title">Delays / Delays</h2>
+      <p class="section-subtitle" data-i18n="gallery_subtitle">Delays delays delays delays delays delays delays delays</p>
+    </div>
+    <div class="gallery-grid" id="galleryGrid"></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-image fade-in">
+        <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=800" alt="Clinic">
+        <div class="about-badge"><span class="number">10+</span><span class="label" data-i18n="about_badge">Delays Delays</span></div>
+      </div>
+      <div class="about-text fade-in">
+        <span class="section-tag" data-i18n="about_tag">Delays Delays</span>
+        <h2 data-i18n="about_title">Delays Delays Delays Delays</h2>
+        <p data-i18n="about_text1">Delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays</p>
+        <p data-i18n="about_text2">Delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays</p>
+        <div class="features">
+          <div class="feature"><i class="fas fa-check-circle"></i><span data-i18n="feature1">Delays Delays</span></div>
+          <div class="feature"><i class="fas fa-check-circle"></i><span data-i18n="feature2">Delays Delays</span></div>
+          <div class="feature"><i class="fas fa-check-circle"></i><span data-i18n="feature3">Delays Delays</span></div>
+          <div class="feature"><i class="fas fa-check-circle"></i><span data-i18n="feature4">Delays Delays</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- APPOINTMENT -->
+<section class="appointment" id="appointment">
+  <div class="container">
+    <div class="section-header fade-in">
+      <span class="section-tag" data-i18n="booking_tag">Delays Delays</span>
+      <h2 class="section-title" data-i18n="booking_title">Delays Delays Delays</h2>
+      <p class="section-subtitle" data-i18n="booking_subtitle">Delays delays delays delays delays delays delays delays delays</p>
+    </div>
+    <div class="booking-container">
+      <div class="booking-steps">
+        <div class="step active" data-step="1"><div class="step-circle">1</div><div class="step-label" data-i18n="step1">Delays</div></div>
+        <div class="step" data-step="2"><div class="step-circle">2</div><div class="step-label" data-i18n="step2">Delays</div></div>
+        <div class="step" data-step="3"><div class="step-circle">3</div><div class="step-label" data-i18n="step3">Delays</div></div>
+        <div class="step" data-step="4"><div class="step-circle">4</div><div class="step-label" data-i18n="step4">Delays</div></div>
+      </div>
+
+      <!-- Step 1: Service -->
+      <div class="booking-step active" data-step="1">
+        <h3 class="step-title" data-i18n="step1_title">Delays Delays</h3>
+        <p class="step-description" data-i18n="step1_desc">Delays delays delays delays delays delays delays</p>
+        <div class="form-group">
+          <label data-i18n="label_service">Delays</label>
+          <select id="serviceSelect"><option value="">-- Delays --</option></select>
+        </div>
+        <div class="form-group">
+          <label data-i18n="label_specialist">Delays</label>
+          <select id="specialistSelect"><option value="">-- Delays --</option></select>
+        </div>
+      </div>
+
+      <!-- Step 2: Date & Time -->
+      <div class="booking-step" data-step="2">
+        <h3 class="step-title" data-i18n="step2_title">Delays Delays Delays</h3>
+        <p class="step-description" data-i18n="step2_desc">Delays delays delays delays delays delays</p>
+        <div class="form-row">
+          <div class="form-group">
+            <label data-i18n="label_date">Delays</label>
+            <input type="date" id="dateInput">
+          </div>
+          <div class="form-group">
+            <label data-i18n="label_time">Delays</label>
+            <div class="time-slots" id="timeSlots"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 3: Personal Info -->
+      <div class="booking-step" data-step="3">
+        <h3 class="step-title" data-i18n="step3_title">Delays Delays</h3>
+        <p class="step-description" data-i18n="step3_desc">Delays delays delays delays delays delays</p>
+        <div class="form-row">
+          <div class="form-group"><label data-i18n="label_name">Delays</label><input type="text" id="nameInput" placeholder="Delays Delays"></div>
+          <div class="form-group"><label data-i18n="label_surname">Delays</label><input type="text" id="surnameInput" placeholder="Delays"></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label data-i18n="label_phone">Delays</label><input type="tel" id="phoneInput" placeholder="+374 XX XXX XXX"></div>
+          <div class="form-group"><label data-i18n="label_email">Delays</label><input type="email" id="emailInput" placeholder="email@example.com"></div>
+        </div>
+        <div class="form-group"><label data-i18n="label_notes">Delays</label><textarea id="notesInput" rows="3" placeholder="Delays delays delays..."></textarea></div>
+      </div>
+
+      <!-- Step 4: Summary -->
+      <div class="booking-step" data-step="4">
+        <h3 class="step-title" data-i18n="step4_title">Delays Delays</h3>
+        <p class="step-description" data-i18n="step4_desc">Delays delays delays delays delays delays delays delays</p>
+        <div class="summary-card" id="summaryCard"></div>
+        <div id="successScreen" class="success-screen" style="display:none">
+          <div class="success-icon"><i class="fas fa-check"></i></div>
+          <h3 data-i18n="success_title">Delays!</h3>
+          <p data-i18n="success_text">Delays delays delays delays delays delays delays delays delays delays delays delays delays delays</p>
+        </div>
+      </div>
+
+      <div class="booking-nav">
+        <button class="btn btn-secondary" id="prevBtn" style="display:none" data-i18n="btn_prev"><i class="fas fa-arrow-left"></i> Delays</button>
+        <button class="btn btn-primary" id="nextBtn" data-i18n="btn_next">Delays <i class="fas fa-arrow-right"></i></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="container">
+    <div class="section-header fade-in">
+      <span class="section-tag" data-i18n="contact_tag">Delays Delays</span>
+      <h2 class="section-title" data-i18n="contact_title">Delays Delays Delays</h2>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-card fade-in">
+        <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+        <h3 data-i18n="contact_address_title">Delays</h3>
+        <p data-i18n="contact_address">Delays delays delays, 10</p>
+      </div>
+      <div class="contact-card fade-in">
+        <div class="contact-icon"><i class="fas fa-phone"></i></div>
+        <h3 data-i18n="contact_phone_title">Delays</h3>
+        <p><a href="tel:+37410123456">+374 10 123 456</a></p>
+      </div>
+      <div class="contact-card fade-in">
+        <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+        <h3 data-i18n="contact_email_title">Delays</h3>
+        <p><a href="mailto:info@beautymed.am">info@beautymed.am</a></p>
+      </div>
+      <div class="contact-card fade-in">
+        <div class="contact-icon"><i class="fas fa-clock"></i></div>
+        <h3 data-i18n="contact_hours_title">Delays Delays</h3>
+        <p data-i18n="contact_hours">Delays-Delays: 09:00 - 20:00</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-container">
+    <div class="footer-section">
+      <div class="logo" style="color:white;margin-bottom:1rem"><i class="fas fa-leaf"></i> BeautyMed</div>
+      <p data-i18n="footer_about">Delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays</p>
+      <div class="social-links">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-telegram"></i></a>
+        <a href="#"><i class="fab fa-whatsapp"></i></a>
+      </div>
+    </div>
+    <div class="footer-section">
+      <h4 data-i18n="footer_links">Delays</h4>
+      <a href="#home" data-i18n="nav_home">Delays</a>
+      <a href="#services" data-i18n="nav_services">Delays</a>
+      <a href="#gallery" data-i18n="nav_gallery">Delays</a>
+      <a href="#about" data-i18n="nav_about">Delays Delays</a>
+    </div>
+    <div class="footer-section">
+      <h4 data-i18n="footer_services">Delays</h4>
+      <a href="#" data-i18n="svc1">Delays Delays</a>
+      <a href="#" data-i18n="svc2">Delays Delays</a>
+      <a href="#" data-i18n="svc3">Delays Delays</a>
+      <a href="#" data-i18n="svc4">Delays Delays</a>
+    </div>
+    <div class="footer-section">
+      <h4 data-i18n="footer_contact">Delays</h4>
+      <p><i class="fas fa-phone"></i> +374 10 123 456</p>
+      <p><i class="fas fa-envelope"></i> info@beautymed.am</p>
+      <p><i class="fas fa-map-marker-alt"></i> <span data-i18n="contact_address">Delays delays delays, 10</span></p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2026 BeautyMed Clinic. <span data-i18n="footer_rights">Delays delays delays delays</span></p>
+  </div>
+</footer>
+
+<script>
+// ============ TRANSLATIONS ============
+const translations = {
+  hy: {
+    nav_home:"Գdelays",nav_services:"Ծdelays",nav_gallery:"Պdelays",nav_about:"Մdelays Մdelays",nav_booking:"Delays Delays",nav_contact:"Կdelays",
+    hero_title:"Ձdelays",hero_title_accent:"Գdelays",hero_subtitle:"Delays delays delays delays delays delays delays delays delays delays delays delays delays",
+    hero_btn1:"Delays Delays",hero_btn2:"Delays Delays",hero_card_title:"Delays Delays",hero_card_text:"Delays delays delays delays delays delays delays delays delays delays delays delays delays",
+    stat_years:"Delays",stat_clients:"Delays",stat_services:"Delays",
+    services_tag:"Delays Delays",services_title:"Delays Delays Delays",services_subtitle:"Delays delays delays delays delays delays delays delays delays delays",
+    gallery_tag:"Delays Delays",gallery_title:"Delays / Delays",gallery_subtitle:"Delays delays delays delays delays delays delays delays",
+    about_tag:"Delays Delays",about_title:"Delays Delays Delays Delays",about_text1:"Delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays",about_text2:"Delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays",
+    about_badge:"Delays Delays",feature1:"Delays Delays",feature2:"Delays Delays",feature3:"Delays Delays",feature4:"Delays Delays",
+    booking_tag:"Delays Delays",booking_title:"Delays Delays Delays",booking_subtitle:"Delays delays delays delays delays delays delays delays delays",
+    step1:"Delays",step2:"Delays",step3:"Delays",step4:"Delays",
+    step1_title:"Delays Delays",step1_desc:"Delays delays delays delays delays delays delays",
+    step2_title:"Delays Delays Delays",step2_desc:"Delays delays delays delays delays delays",
+    step3_title:"Delays Delays",step3_desc:"Delays delays delays delays delays delays",
+    step4_title:"Delays Delays",step4_desc:"Delays delays delays delays delays delays delays delays",
+    label_service:"Delays",label_specialist:"Delays",label_date:"Delays",label_time:"Delays",label_name:"Delays",label_surname:"Delays",label_phone:"Delays",label_email:"Delays",label_notes:"Delays",
+    btn_prev:"Delays",btn_next:"Delays",btn_confirm:"Delays Delays",btn_new:"Delays Delays",
+    success_title:"Delays!",success_text:"Delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays",
+    contact_tag:"Delays Delays",contact_title:"Delays Delays Delays",contact_address_title:"Delays",contact_address:"Delays delays delays, 10",contact_phone_title:"Delays",contact_email_title:"Delays",contact_hours_title:"Delays Delays",contact_hours:"Delays-Delays: 09:00 - 20:00",
+    footer_about:"Delays delays delays delays delays delays delays delays delays delays delays delays delays delays delays",footer_links:"Delays",footer_services:"Delays",footer_contact:"Delays",footer_rights:"Delays delays delays delays",
+    svc1:"Delays Delays",svc2:"Delays Delays",svc3:"Delays Delays",svc4:"Delays Delays",
+    summary_service:"Delays",summary_specialist:"Delays",summary_date:"Delays",summary_time:"Delays",summary_name:"Delays",summary_phone:"Delays",summary_total:"Delays",
+    select_service:"-- Delays --",select_specialist:"-- Delays --",
+    services:[
+      {name:"Delays Delays",desc:"Delays delays delays delays delays delays delays delays delays delays delays delays",price:15000},
+      {name:"Delays Delays",desc:"Delays delays delays delays delays delays delays delays delays delays delays delays",price:25000},
+      {name:"Delays Delays",desc:"Delays delays delays delays delays delays delays delays delays delays delays delays",price:20000},
+      {name:"Delays Delays",desc:"Delays delays delays delays delays delays delays delays delays delays delays delays",price:35000},
+      {name:"Delays Delays",desc:"Delays delays delays delays delays delays delays delays delays delays delays delays",price:18000},
+      {name:"Delays Delays",desc:"Delays delays delays delays delays delays delays delays delays delays delays delays",price:40000}
+    ],
+    specialists:["Delays Delays","Delays Delays","Delays Delays","Delays Delays"],
+    gallery_items:[
+      {title:"Delays Delays",desc:"Delays delays delays delays"},
+      {title:"Delays Delays",desc:"Delays delays delays delays"},
+      {title:"Delays Delays",desc:"Delays delays delays delays"},
+      {title:"Delays Delays",desc:"Delays delays delays delays"},
+      {title:"Delays Delays",desc:"Delays delays delays delays"},
+      {title:"Delays Delays",desc:"Delays delays delays delays"}
+    ],
+    days:["Delays","Delays","Delays","Delays","Delays","Delays","Delays"]
+  },
+  en: {
+    nav_home:"Home",nav_services:"Services",nav_gallery:"Gallery",nav_about:"About Us",nav_booking:"Book Now",nav_contact:"Contact",
+    hero_title:"Discover Your",hero_title_accent:"Natural Beauty",hero_subtitle:"Premium medical and beauty treatments in a serene, luxurious environment. Our expert team is dedicated to enhancing your natural beauty.",
+    hero_btn1:"Book Appointment",hero_btn2:"Our Services",hero_card_title:"Why Choose Us",hero_card_text:"We combine cutting-edge technology with personalized care to deliver exceptional results that exceed your expectations.",
+    stat_years:"Years",stat_clients:"Clients",stat_services:"Services",
+    services_tag:"What We Offer",services_title:"Our Premium Services",services_subtitle:"Discover our comprehensive range of medical and beauty treatments tailored to your unique needs.",
+    gallery_tag:"Our Results",gallery_title:"Before / After",gallery_subtitle:"Real results from our satisfied clients. See the transformative power of our treatments.",
+    about_tag:"About Us",about_title:"Excellence in Beauty & Healthcare",about_text1:"For over a decade, BeautyMed Clinic has been at the forefront of medical and aesthetic excellence. Our state-of-the-art facility combines advanced technology with a warm, welcoming atmosphere.",about_text2:"Our team of certified specialists is committed to providing personalized care that meets the highest standards of safety and effectiveness.",
+    about_badge:"Years Experience",feature1:"Certified Specialists",feature2:"Modern Equipment",feature3:"Sterile Environment",feature4:"Personalized Care",
+    booking_tag:"Online Booking",booking_title:"Book Your Appointment",booking_subtitle:"Schedule your visit in just a few simple steps. We'll confirm your appointment shortly.",
+    step1:"Service",step2:"Schedule",step3:"Details",step4:"Confirm",
+    step1_title:"Choose Your Service",step1_desc:"Select the treatment you're interested in and your preferred specialist.",
+    step2_title:"Select Date & Time",step2_desc:"Pick a convenient date and time for your visit.",
+    step3_title:"Your Information",step3_desc:"Please provide your contact details so we can confirm your appointment.",
+    step4_title:"Review & Confirm",step4_desc:"Please review your booking details before confirming.",
+    label_service:"Service",label_specialist:"Specialist",label_date:"Date",label_time:"Time",label_name:"First Name",label_surname:"Last Name",label_phone:"Phone",label_email:"Email",label_notes:"Notes (optional)",
+    btn_prev:"Back",btn_next:"Next",btn_confirm:"Confirm Booking",btn_new:"New Booking",
+    success_title:"Booking Confirmed!",success_text:"Thank you! Your appointment has been successfully booked. We'll send a confirmation to your phone and email shortly.",
+    contact_tag:"Get In Touch",contact_title:"Contact Information",contact_address_title:"Address",contact_address:"Yerevan, Northern Ave, 10",contact_phone_title:"Phone",contact_email_title:"Email",contact_hours_title:"Working Hours",contact_hours:"Mon-Sat: 09:00 - 20:00",
+    footer_about:"BeautyMed Clinic is your premier destination for medical and beauty treatments, combining expertise with elegance.",footer_links:"Quick Links",footer_services:"Services",footer_contact:"Contact",footer_rights:"All rights reserved",
+    svc1:"Cosmetology",svc2:"Dermatology",svc3:"Massage Therapy",svc4:"Aesthetic Medicine",
+    summary_service:"Service",summary_specialist:"Specialist",summary_date:"Date",summary_time:"Time",summary_name:"Client",summary_phone:"Phone",summary_total:"Total",
+    select_service:"-- Select service --",select_specialist:"-- Select specialist --",
+    services:[
+      {name:"Cosmetology",desc:"Professional facial treatments, peels, and skincare solutions for radiant, healthy skin.",price:15000},
+      {name:"Dermatology",desc:"Expert diagnosis and treatment of skin conditions with advanced medical technology.",price:25000},
+      {name:"Massage Therapy",desc:"Relaxing and therapeutic massages to relieve stress and restore balance.",price:20000},
+      {name:"Aesthetic Medicine",desc:"Non-invasive procedures to enhance your natural beauty and confidence.",price:35000},
+      {name:"Hair Restoration",desc:"Advanced treatments for hair health, growth, and restoration.",price:18000},
+      {name:"Body Contouring",desc:"Sculpt and refine your silhouette with cutting-edge body treatments.",price:40000}
+    ],
+    specialists:["Dr. Anna Petrosyan","Dr. Lilit Grigoryan","Dr. Mariam Hovhannisyan","Dr. Nare Sargsyan"],
+    gallery_items:[
+      {title:"Facial Rejuvenation",desc:"Complete skin transformation"},
+      {title:"Body Contouring",desc:"Sculpted silhouette results"},
+      {title:"Hair Restoration",desc:"Natural hair growth"},
+      {title:"Skin Treatment",desc:"Clear, radiant complexion"},
+      {title:"Anti-Aging",desc:"Youthful appearance restored"},
+      {title:"Wellness Therapy",desc:"Holistic body balance"}
+    ],
+    days:["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]
+  },
+  ru: {
+    nav_home:"Главная",nav_services:"Услуги",nav_gallery:"Галерея",nav_about:"О нас",nav_booking:"Записаться",nav_contact:"Контакты",
+    hero_title:"Откройте свою",hero_title_accent:"Естественную Красоту",hero_subtitle:"Премиальные медицинские и косметологические процедуры в спокойной, роскошной обстановке. Наша команда экспертов посвящена улучшению вашей естественной красоты.",
+    hero_btn1:"Записаться",hero_btn2:"Наши Услуги",hero_card_title:"Почему Мы",hero_card_text:"Мы сочетаем передовые технологии с персонализированным уходом для достижения исключительных результатов.",
+    stat_years:"Лет",stat_clients:"Клиентов",stat_services:"Услуг",
+    services_tag:"Что Мы Предлагаем",services_title:"Наши Премиум Услуги",services_subtitle:"Откройте для себя наш широкий спектр медицинских и косметологических процедур, адаптированных к вашим потребностям.",
+    gallery_tag:"Наши Результаты",gallery_title:"До / После",gallery_subtitle:"Реальные результаты наших довольных клиентов. Увидьте преобразующую силу наших процедур.",
+    about_tag:"О Нас",about_title:"Превосходство в Красоте и Здоровье",about_text1:"Более десятилетия клиника BeautyMed находится на переднем крае медицинской и эстетической совершенства. Наш современный объект сочетает передовые технологии с теплой, приветливой атмосферой.",about_text2:"Наша команда сертифицированных специалистов стремится предоставлять персонализированную помощь, соответствующую высочайшим стандартам безопасности и эффективности.",
+    about_badge:"Лет Опыта",feature1:"Сертифицированные Специалисты",feature2:"Современное Оборудование",feature3:"Стерильная Среда",feature4:"Персонализированный Уход",
+    booking_tag:"Онлайн Запись",booking_title:"Запишитесь на Прием",booking_subtitle:"Запланируйте визит всего за несколько простых шагов. Мы подтвердим вашу запись в ближайшее время.",
+    step1:"Услуга",step2:"Расписание",step3:"Данные",step4:"Подтвердить",
+    step1_title:"Выберите Услугу",step1_desc:"Выберите интересующую вас процедуру и предпочтительного специалиста.",
+    step2_title:"Выберите Дату и Время",step2_desc:"Выберите удобную дату и время для вашего визита.",
+    step3_title:"Ваши Данные",step3_desc:"Пожалуйста, предоставьте ваши контактные данные для подтверждения записи.",
+    step4_title:"Проверка и Подтверждение",step4_desc:"Пожалуйста, проверьте детали вашей записи перед подтверждением.",
+    label_service:"Услуга",label_specialist:"Специалист",label_date:"Дата",label_time:"Время",label_name:"Имя",label_surname:"Фамилия",label_phone:"Телефон",label_email:"Email",label_notes:"Примечания (необязательно)",
+    btn_prev:"Назад",btn_next:"Далее",btn_confirm:"Подтвердить Запись",btn_new:"Новая Запись",
+    success_title:"Запись Подтверждена!",success_text:"Спасибо! Ваша запись успешно оформлена. Мы отправим подтверждение на ваш телефон и email в ближайшее время.",
+    contact_tag:"Свяжитесь с Нами",contact_title:"Контактная Информация",contact_address_title:"Адрес",contact_address:"Ереван, Северный пр-т, 10",contact_phone_title:"Телефон",contact_email_title:"Email",contact_hours_title:"Часы Работы",contact_hours:"Пн-Сб: 09:00 - 20:00",
+    footer_about:"BeautyMed Clinic — ваше главное направление для медицинских и косметологических процедур, сочетающее экспертизу с элегантностью.",footer_links:"Быстрые Ссылки",footer_services:"Услуги",footer_contact:"Контакты",footer_rights:"Все права защищены",
+    svc1:"Косметология",svc2:"Дерматология",svc3:"Массажная Терапия",svc4:"Эстетическая Медицина",
+    summary_service:"Услуга",summary_specialist:"Специалист",summary_date:"Дата",summary_time:"Время",summary_name:"Клиент",summary_phone:"Телефон",summary_total:"Итого",
+    select_service:"-- Выберите услугу --",select_specialist:"-- Выберите специалиста --",
+    services:[
+      {name:"Косметология",desc:"Профессиональные процедуры для лица, пилинги и решения по уходу за кожей для сияющей, здоровой кожи.",price:15000},
+      {name:"Дерматология",desc:"Экспертная диагностика и лечение кожных заболеваний с использованием передовых медицинских технологий.",price:25000},
+      {name:"Массажная Терапия",desc:"Расслабляющие и терапевтические массажи для снятия стресса и восстановления баланса.",price:20000},
+      {name:"Эстетическая Медицина",desc:"Неинвазивные процедуры для улучшения вашей естественной красоты и уверенности.",price:35000},
+      {name:"Восстановление Волос",desc:"Передовые методы лечения для здоровья, роста и восстановления волос.",price:18000},
+      {name:"Коррекция Фигуры",desc:"Скульптурирование и совершенствование вашего силуэта с помощью передовых процедур.",price:40000}
+    ],
+    specialists:["Др. Анна Петросян","Др. Лилит Григорян","Др. Мариам Ованнисян","Др. Нарек Саргсян"],
+    gallery_items:[
+      {title:"Омоложение Лица",desc:"Полная трансформация кожи"},
+      {title:"Коррекция Фигуры",desc:"Результаты скульптурирования"},
+      {title:"Восстановление Волос",desc:"Естественный рост волос"},
+      {title:"Лечение Кожи",desc:"Чистый, сияющий цвет лица"},
+      {title:"Anti-Age",desc:"Возвращение молодости"},
+      {title:"Оздоровительная Терапия",desc:"Гармония тела"}
+    ],
+    days:["Вс","Пн","Вт","Ср","Чт","Пт","Сб"]
+  }
+};
+
+// ============ STATE ============
+let currentLang = 'hy';
+let currentStep = 1;
+let bookingData = {service:null,specialist:null,date:null,time:null,name:'',surname:'',phone:'',email:'',notes:''};
+
+// ============ INIT ============
+document.addEventListener('DOMContentLoaded',()=>{
+  applyLanguage(currentLang);
+  renderServices();
+  renderGallery();
+  populateServiceSelect();
+  populateSpecialistSelect();
+  setupDateInput();
+  setupEventListeners();
+  setupScrollAnimations();
+});
+
+// ============ LANGUAGE ============
+function applyLanguage(lang){
+  currentLang = lang;
+  document.documentElement.lang = lang;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key = el.getAttribute('data-i18n');
+    if(translations[lang][key]) el.textContent = translations[lang][key];
+  });
+  document.querySelectorAll('.lang-btn').forEach(btn=>{
+    btn.classList.toggle('active',btn.dataset.lang===lang);
+  });
+  renderServices();
+  renderGallery();
+  populateServiceSelect();
+  populateSpecialistSelect();
+  if(currentStep===4) renderSummary();
+}
+
+// ============ SERVICES RENDER ============
+function renderServices(){
+  const grid = document.getElementById('servicesGrid');
+  const icons = ['fa-spa','fa-user-md','fa-hands','fa-star','fa-cut','fa-fire'];
+  grid.innerHTML = translations[currentLang].services.map((s,i)=>`
+    <div class="service-card fade-in">
+      <div class="service-icon"><i class="fas ${icons[i]}"></i></div>
+      <h3>${s.name}</h3>
+      <p>${s.desc}</p>
+      <div class="service-price">
+        <span class="price">${s.price.toLocaleString()} ֏</span>
+        <button class="book-btn" onclick="quickBook(${i})"><i class="fas fa-calendar-plus"></i> ${currentLang==='hy'?'Delays':currentLang==='en'?'Book':'Записаться'}</button>
+      </div>
+    </div>
+  `).join('');
+  setupScrollAnimations();
+}
+
+// ============ GALLERY RENDER ============
+function renderGallery(){
+  const grid = document.getElementById('galleryGrid');
+  const imgs = [
+    'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=600',
+    'https://images.unsplash.com/photo-1519415943484-9fa1873496d4?w=600',
+    'https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=600',
+    'https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?w=600',
+    'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=600',
+    'https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=600'
+  ];
+  grid.innerHTML = translations[currentLang].gallery_items.map((item,i)=>`
+    <div class="gallery-item fade-in">
+      <img src="${imgs[i]}" alt="${item.title}" loading="lazy">
+      <div class="gallery-overlay"><div><h4>${item.title}</h4><p>${item.desc}</p></div></div>
+    </div>
+  `).join('');
+  setupScrollAnimations();
+}
+
+// ============ FORM POPULATION ============
+function populateServiceSelect(){
+  const sel = document.getElementById('serviceSelect');
+  const t = translations[currentLang];
+  sel.innerHTML = `<option value="">${t.select_service}</option>` + 
+    t.services.map((s,i)=>`<option value="${i}">${s.name} - ${s.price.toLocaleString()} ֏</option>`).join('');
+}
+function populateSpecialistSelect(){
+  const sel = document.getElementById('specialistSelect');
+  const t = translations[currentLang];
+  sel.innerHTML = `<option value="">${t.select_specialist}</option>` + 
+    t.specialists.map((s,i)=>`<option value="${i}">${s}</option>`).join('');
+}
+function setupDateInput(){
+  const dateInput = document.getElementById('dateInput');
+  const today = new Date();
+  dateInput.min = today.toISOString().split('T')[0];
+  const max = new Date();max.setMonth(max.getMonth()+2);
+  dateInput.max = max.toISOString().split('T')[0];
+}
+
+// ============ TIME SLOTS ============
+function generateTimeSlots(){
+  const container = document.getElementById('timeSlots');
+  const times = ['09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00'];
+  const unavailable = new Set(['12:00','15:00']);
+  container.innerHTML = times.map(t=>`
+    <div class="time-slot ${unavailable.has(t)?'unavailable':''}" data-time="${t}">${t}</div>
+  `).join('');
+  container.querySelectorAll('.time-slot:not(.unavailable)').forEach(slot=>{
+    slot.addEventListener('click',()=>{
+      container.querySelectorAll('.time-slot').forEach(s=>s.classList.remove('selected'));
+      slot.classList.add('selected');
+      bookingData.time = slot.dataset.time;
+    });
+  });
+}
+
+// ============ EVENT LISTENERS ============
+function setupEventListeners(){
+  // Language
+  document.querySelectorAll('.lang-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>applyLanguage(btn.dataset.lang));
+  });
+  // Mobile menu
+  document.getElementById('mobileMenuBtn').addEventListener('click',()=>{
+    document.getElementById('navLinks').classList.toggle('active');
+  });
+  document.querySelectorAll('.nav-links a').forEach(a=>{
+    a.addEventListener('click',()=>document.getElementById('navLinks').classList.remove('active'));
+  });
+  // Service select
+  document.getElementById('serviceSelect').addEventListener('change',e=>{
+    bookingData.service = e.target.value!=='' ? parseInt(e.target.value) : null;
+  });
+  document.getElementById('specialistSelect').addEventListener('change',e=>{
+    bookingData.specialist = e.target.value!=='' ? parseInt(e.target.value) : null;
+  });
+  // Date
+  document.getElementById('dateInput').addEventListener('change',e=>{
+    bookingData.date = e.target.value;
+    generateTimeSlots();
+    bookingData.time = null;
+  });
+  // Personal info
+  ['nameInput','surnameInput','phoneInput','emailInput','notesInput'].forEach(id=>{
+    document.getElementById(id).addEventListener('input',e=>{
+      const key = id.replace('Input','');
+      bookingData[key] = e.target.value;
+    });
+  });
+  // Nav buttons
+  document.getElementById('nextBtn').addEventListener('click',nextStep);
+  document.getElementById('prevBtn').addEventListener('click',prevStep);
+}
+
+// ============ STEP NAVIGATION ============
+function nextStep(){
+  if(!validateStep(currentStep)) return;
+  if(currentStep===3){
+    renderSummary();
+    document.getElementById('nextBtn').innerHTML = `<i class="fas fa-check"></i> ${translations[currentLang].btn_confirm}`;
+  }
+  if(currentStep===4){
+    submitBooking();
+    return;
+  }
+  if(currentStep<4){
+    currentStep++;
+    updateStepUI();
+  }
+}
+function prevStep(){
+  if(currentStep>1){
+    currentStep--;
+    updateStepUI();
+    if(currentStep<4){
+      document.getElementById('nextBtn').innerHTML = `${translations[currentLang].btn_next} <i class="fas fa-arrow-right"></i>`;
+    }
+  }
+}
+function updateStepUI(){
+  document.querySelectorAll('.booking-step').forEach(s=>{
+    s.classList.toggle('active',parseInt(s.dataset.step)===currentStep);
+  });
+  document.querySelectorAll('.step').forEach(s=>{
+    s.classList.toggle('active',parseInt(s.dataset.step)<=currentStep);
+  });
+  document.getElementById('prevBtn').style.display = currentStep>1 ? 'inline-flex' : 'none';
+}
+
+// ============ VALIDATION ============
+function validateStep(step){
+  const t = translations[currentLang];
+  if(step===1){
+    if(bookingData.service===null){alert(currentLang==='hy'?'Ընտdelays delays':currentLang==='en'?'Please select a service':'Выберите услугу');return false}
+    if(bookingData.specialist===null){alert(currentLang==='hy'?' Delays delays delays':currentLang==='en'?'Please select a specialist':'Выберите специалиста');return false}
+  }
+  if(step===2){
+    if(!bookingData.date){alert(currentLang==='hy'?'Delays delays delays':currentLang==='en'?'Please select a date':'Выберите дату');return false}
+    if(!bookingData.time){alert(currentLang==='hy'?'Delays delays delays':currentLang==='en'?'Please select a time':'Выберите время');return false}
+  }
+  if(step===3){
+    if(!bookingData.name.trim()||!bookingData.surname.trim()||!bookingData.phone.trim()){
+      alert(currentLang==='hy'?'Delays delays delays delays delays':currentLang==='en'?'Please fill in required fields':'Заполните обязательные поля');return false
+    }
+  }
+  return true;
+}
+
+// ============ SUMMARY ============
+function renderSummary(){
+  const t = translations[currentLang];
+  const service = t.services[bookingData.service];
+  const specialist = t.specialists[bookingData.specialist];
+  const date = new Date(bookingData.date).toLocaleDateString(currentLang==='hy'?'hy-AM':currentLang==='en'?'en-US':'ru-RU',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  document.getElementById('summaryCard').innerHTML = `
+    <div class="summary-row"><span class="label">${t.summary_service}</span><span class="value">${service.name}</span></div>
+    <div class="summary-row"><span class="label">${t.summary_specialist}</span><span class="value">${specialist}</span></div>
+    <div class="summary-row"><span class="label">${t.summary_date}</span><span class="value">${date}</span></div>
+    <div class="summary-row"><span class="label">${t.summary_time}</span><span class="value">${bookingData.time}</span></div>
+    <div class="summary-row"><span class="label">${t.summary_name}</span><span class="value">${bookingData.name} ${bookingData.surname}</span></div>
+    <div class="summary-row"><span class="label">${t.summary_phone}</span><span class="value">${bookingData.phone}</span></div>
+    <div class="summary-row"><span class="label">${t.summary_total}</span><span class="value">${service.price.toLocaleString()} ֏</span></div>
+  `;
+}
+
+// ============ SUBMIT ============
+function submitBooking(){
+  // Simulate API call
+  console.log('Booking submitted:',bookingData);
+  document.querySelector('.booking-step[data-step="4"] .summary-card').style.display='none';
+  document.getElementById('successScreen').style.display='block';
+  document.querySelector('.booking-nav').style.display='none';
+  // Reset after delay
+  setTimeout(()=>{
+    if(confirm(currentLang==='hy'?'Delays delays delays?':currentLang==='en'?'Start new booking?':'Начать новую запись?')){
+      resetBooking();
+    }
+  },2000);
+}
+function resetBooking(){
+  bookingData = {service:null,specialist:null,date:null,time:null,name:'',surname:'',phone:'',email:'',notes:''};
+  currentStep = 1;
+  document.getElementById('serviceSelect').value='';
+  document.getElementById('specialistSelect').value='';
+  document.getElementById('dateInput').value='';
+  document.getElementById('timeSlots').innerHTML='';
+  ['nameInput','surnameInput','phoneInput','emailInput','notesInput'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('successScreen').style.display='none';
+  document.querySelector('.booking-step[data-step="4"] .summary-card').style.display='block';
+  document.querySelector('.booking-nav').style.display='flex';
+  document.getElementById('nextBtn').innerHTML = `${translations[currentLang].btn_next} <i class="fas fa-arrow-right"></i>`;
+  updateStepUI();
+}
+
+// ============ QUICK BOOK ============
+function quickBook(serviceIdx){
+  bookingData.service = serviceIdx;
+  document.getElementById('serviceSelect').value = serviceIdx;
+  document.getElementById('appointment').scrollIntoView({behavior:'smooth'});
+}
+
+// ============ SCROLL ANIMATIONS ============
+function setupScrollAnimations(){
+  const observer = new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  },{threshold:0.1});
+  document.querySelectorAll('.fade-in').forEach(el=>observer.observe(el));
+}
+
+// ============ NAVBAR SCROLL ============
+window.addEventListener('scroll',()=>{
+  document.querySelector('.navbar').classList.toggle('scrolled',window.scrollY>50);
+});
+</script>
+</body>
+</html>
